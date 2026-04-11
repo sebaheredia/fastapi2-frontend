@@ -5,6 +5,8 @@ import './App.css';
 export default function App() {
   // ─── Estado ────────────────────────────────────────────────
   const [users, setUsers] = useState([]);           // lista de usuarios
+  // Al principio del componente App, después de los useState
+  console.log("API URL:", process.env.REACT_APP_API_URL);
   const [nombre, setNombre] = useState('');          // campo nombre del form
   const [email, setEmail] = useState('');            // campo email del form
   const [loading, setLoading] = useState(true);      // cargando lista
