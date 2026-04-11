@@ -43,6 +43,16 @@ jobs:
       - name: Configurar Docker Buildx
         uses: docker/setup-buildx-action@v3
 
+       # ← NUEVO STEP: determina qué URL usar según la rama
+      - name: Definir URL del backend
+        id: backend_url
+        run: |
+          if [ "${{ github.ref }}" = "refs/heads/main" ]; then
+            echo "url=${{ secrets.BACKEND_PRODUCTION_URL }}" >> $GITHUB_OUTPUT
+          else
+            echo "url=${{ secrets.BACKEND_STAGING_URL }}" >> $GITHUB_OUTPUT
+          fi
+        
       - name: Build y push de la imagen
         uses: docker/build-push-action@v5
         with:
@@ -50,10 +60,8 @@ jobs:
           push: true
           tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
-          # La URL del backend se inyecta en tiempo de build
-          # React la incluye en el bundle compilado
           build-args: |
-            REACT_APP_API_URL=${{ github.ref == 'refs/heads/main' && secrets.BACKEND_PRODUCTION_URL || secrets.BACKEND_STAGING_URL }}
+            REACT_APP_API_URL=${{ steps.backend_url.outputs.url }}
           cache-from: type=gha
           cache-to: type=gha,mode=max
 
