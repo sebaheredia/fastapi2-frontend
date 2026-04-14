@@ -10,7 +10,7 @@ Frontend de la aplicación FastApi2, construido con **React**, servido con **ngi
 [Usuario] → [React (frontend)] → [FastAPI (backend)] → [PostgreSQL]
 ```
 
-El frontend NO se conecta directamente a la base de datos. Solo habla con el backend via HTTP/JSON.
+El frontend NO se conecta directamente a la base de datos. Solo habla con el backend via HTTP/JSON. hola
 
 ---
 
