@@ -289,7 +289,6 @@ export default function App() {
                     <span className="user-email">{user.email}</span>
                     <span>Edad: {user.edad}</span>
                     <span style={{ fontWeight: 'bold' }}>
-                      // ✅ Usar optional chaining
                       {user.categoria?.toUpperCase() ?? '—'}
                     </span>
                   </div>
