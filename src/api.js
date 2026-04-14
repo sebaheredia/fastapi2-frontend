@@ -75,23 +75,24 @@ export async function getUsers() {
  * error.detail || 'Error al crear usuario' usa el mensaje del backend si existe,
  * o un mensaje generico si no.
  */
+// ✅ CORRECCIÓN — además agregar el manejo de error que tienen las otras funciones
 export async function createUser(nombre, email, edad) {
-  const res = await fetch(`${API_URL}/users`, {
+  const response = await fetch(`${API_URL}/users`, {
     method: "POST",
-    headers: {
-      "Content-Type": "application/json"
-    },
-    body: JSON.stringify({
-      nombre,
-      email,
-      edad   // 👈 ACÁ
-    })
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ nombre, email, edad })
   });
 
+  if (!response.ok) {
+    const error = await response.json();
+    throw new Error(error.detail || 'Error al crear usuario');
+  }
+
   return response.json();
+}
   // Devuelve el usuario recien creado con su id y created_at
   // asignados automaticamente por la base de datos.
-}
+
 
 
 /**
